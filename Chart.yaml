@@ -1,0 +1,12 @@
+apiVersion: v2
+name: snappass
+description: A Helm chart for Snappass
+home: "https://github.com/lmacka/helm-snappass"
+type: application
+version: 0.1.0
+appVersion: "1.6.2"
+dependencies:
+  - name: redis
+    condition: redis.enabled
+    version: ~19.1
+    repository: https://charts.bitnami.com/bitnami
