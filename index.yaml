@@ -1,0 +1,20 @@
+apiVersion: v1
+entries:
+  snappass:
+  - apiVersion: v2
+    appVersion: 1.6.2
+    created: "2024-04-12T09:13:36.734558299Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~19
+    description: Install the SnapPass secret tool
+    digest: 26a2a63d0fd6626275b4350e9b0358ef34b9e3060ca6a72672b348e63284d870
+    home: https://github.com/lmacka/helm-snappass
+    name: snappass
+    type: application
+    urls:
+    - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.1/snappass-0.1.1.tgz
+    version: 0.1.1
+generated: "2024-04-12T09:13:36.734568278Z"
