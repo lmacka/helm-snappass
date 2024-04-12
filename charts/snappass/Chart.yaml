@@ -3,8 +3,26 @@ name: snappass
 description: Install the SnapPass secret tool
 home: "https://github.com/lmacka/helm-snappass"
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: "1.6.2"
+appVersion: latest
+icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
+keywords:
+  - pinterest
+  - password
+  - secret
+  - security
+  - secure
+  - share
+sources:
+  - https://github.com/lmacka/helm-snappass
+maintainers:
+  - name: Liam M
+    url: https://github.com/lmacka
+kubeVersion: ">=1.21.0-0"
+annotations:
+  artifacthub.io/operator: "false"
+  artifacthub.io/prerelease: "false"
 dependencies:
   - name: redis
     condition: redis.enabled
