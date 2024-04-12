@@ -17,7 +17,7 @@ entries:
       licenses: Apache-2.0
     apiVersion: v2
     appVersion: 7.2.4
-    created: "2024-04-12T16:19:32.663469677+10:00"
+    created: "2024-04-12T17:56:50.45733064+10:00"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -46,34 +46,18 @@ entries:
   snappass:
   - apiVersion: v2
     appVersion: 1.6.2
-    created: "2024-04-12T16:19:32.658216486+10:00"
+    created: "2024-04-12T17:56:50.45138565+10:00"
     dependencies:
     - condition: redis.enabled
       name: redis
       repository: https://charts.bitnami.com/bitnami
       version: ~19
     description: Install the SnapPass secret tool
-    digest: 1fe78044a6546469306b01ecfd815686b37cf6264054674ccebe0386a210eb8a
+    digest: 269c0be1c3071f950912c23940fb27dcd6b1911b1445898fbf7828c96a774b7a
     home: https://github.com/lmacka/helm-snappass
     name: snappass
     type: application
     urls:
     - https://lmacka.github.io/snappass-helm/snappass-0.1.1.tgz
     version: 0.1.1
-  - apiVersion: v2
-    appVersion: 1.6.2
-    created: "2024-04-12T16:19:32.650275465+10:00"
-    dependencies:
-    - condition: redis.enabled
-      name: redis
-      repository: https://charts.bitnami.com/bitnami
-      version: ~19
-    description: Install the SnapPass secret tool
-    digest: 5438a090ca3b9b30df9af927aa9c5f5812d74f764d784bc5b777d24014590275
-    home: https://github.com/lmacka/helm-snappass
-    name: snappass
-    type: application
-    urls:
-    - https://lmacka.github.io/snappass-helm/snappass-0.1.0.tgz
-    version: 0.1.0
-generated: "2024-04-12T16:19:32.642730935+10:00"
+generated: "2024-04-12T17:56:50.443212914+10:00"
