@@ -2,3 +2,5 @@ repositoryID: 6e9ffea4-af7a-4bb6-9707-06b6f4ff93b4
 owners:
   - name: lmacka
     email: lmacka@gmail.com
+ignore:
+  - name: redis
