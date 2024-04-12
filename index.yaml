@@ -1,6 +1,39 @@
 apiVersion: v1
 entries:
   snappass:
+  - annotations:
+      artifacthub.io/operator: "false"
+      artifacthub.io/prerelease: "false"
+    apiVersion: v2
+    appVersion: latest
+    created: "2024-04-12T20:55:54.113489545Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~19
+    description: Install the SnapPass secret tool
+    digest: 68523bae7ecd7a0156ddebfedb497aba57f2486bf8db4d2fb36a96e12eb9bd71
+    home: https://github.com/lmacka/helm-snappass
+    icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
+    keywords:
+    - pinterest
+    - password
+    - secret
+    - security
+    - secure
+    - share
+    kubeVersion: '>=1.21.0-0'
+    maintainers:
+    - name: Liam M
+      url: https://github.com/lmacka
+    name: snappass
+    sources:
+    - https://github.com/lmacka/helm-snappass
+    type: application
+    urls:
+    - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.2/snappass-0.1.2.tgz
+    version: 0.1.2
   - apiVersion: v2
     appVersion: 1.6.2
     created: "2024-04-12T09:13:36.734558299Z"
@@ -17,4 +50,4 @@ entries:
     urls:
     - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.1/snappass-0.1.1.tgz
     version: 0.1.1
-generated: "2024-04-12T09:13:36.734568278Z"
+generated: "2024-04-12T20:55:54.113500906Z"
