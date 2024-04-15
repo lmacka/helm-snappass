@@ -67,10 +67,10 @@ environment:
   - name: REDIS_PASS
     valueFrom:
       secretKeyRef:
-        name: snappass-redis
+        name: HELMRELEASENAME-redis
         key: redis-password
   - name: REDIS_URL
-    value: "redis://default:$(REDIS_PASS)@snappass-redis-master:6379/0"
+    value: "redis://default:$(REDIS_PASS)@HELMRELEASENAME-redis-master:6379/0"
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -109,6 +109,11 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+initContainer:
+  waitForRedis: 
+    enabled: true
+  waitForRedisTimeout: 60
 
 #############################
 ## Redis Dependency Config ##

@@ -30,6 +30,16 @@ spec:
       serviceAccountName: {{ include "snappass.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if and .Values.redis.enabled .Values.initContainer.waitForRedis.enabled }}
+      initContainers:
+      - name: wait
+        image: willwill/wait-for-it
+        command:
+          - /wait-for-it.sh
+        args:
+          - "{{ .Release.Name }}-redis-master.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.redis.master.service.ports.redis }}"
+          - --timeout={{ .Values.initContainer.waitForRedisTimeout }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -49,7 +59,7 @@ spec:
               path: /
               port: http
           env:
-            {{- toYaml .Values.environment | nindent 12 }}
+            {{- toYaml .Values.environment | replace "HELMRELEASENAME" .Release.Name | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}
