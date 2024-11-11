@@ -28,15 +28,40 @@ spec:
   {{- end }}
   {{- if .Values.ingress.tls }}
   tls:
-    {{- range .Values.ingress.tls }}
+    {{- if kindIs "bool" .Values.ingress.tls }}
     - hosts:
-        {{- range .hosts }}
-        - {{ . | quote }}
+        {{- if .Values.ingress.hostname }}
+        - {{ .Values.ingress.hostname | quote }}
+        {{- else }}
+        {{- range .Values.ingress.hosts }}
+        - {{ .host | quote }}
         {{- end }}
-      secretName: {{ .secretName }}
+        {{- end }}
+      secretName: {{ $fullName }}-tls
+    {{- else }}
+    {{- toYaml .Values.ingress.tls | nindent 4 }}
     {{- end }}
   {{- end }}
   rules:
+    {{- if .Values.ingress.hostname }}
+    - host: {{ .Values.ingress.hostname | quote }}
+      http:
+        paths:
+          - path: /
+            {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+            pathType: {{ .pathType }}
+            {{- end }}
+            backend:
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+              {{- else }}
+              serviceName: {{ $fullName }}
+              servicePort: {{ $svcPort }}
+              {{- end }}
+    {{- else }}
     {{- range .Values.ingress.hosts }}
     - host: {{ .host | quote }}
       http:
@@ -57,5 +82,6 @@ spec:
               servicePort: {{ $svcPort }}
               {{- end }}
           {{- end }}
+    {{- end }}
     {{- end }}
 {{- end }}
