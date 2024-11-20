@@ -29,25 +29,29 @@ spec:
       {{- end }}
       serviceAccountName: {{ include "snappass.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
         runAsNonRoot: true
         runAsUser: 1000
         fsGroup: 1000
+        {{- with .Values.podSecurityContext }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- if and .Values.redis.enabled .Values.initContainer.waitForRedis.enabled }}
       initContainers:
       - name: wait-for-redis
-        image: busybox:1.28
+        image: busybox:stable
         command: ['sh', '-c', 'until nc -z {{ .Release.Name }}-redis-master {{ .Values.redis.master.service.ports.redis }}; do echo waiting for redis; sleep 2; done;']
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
             allowPrivilegeEscalation: false
             capabilities:
               drop:
                 - ALL
             readOnlyRootFilesystem: true
+            {{- with .Values.securityContext }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
