@@ -30,25 +30,29 @@ spec:
       serviceAccountName: {{ include "snappass.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
       {{- if and .Values.redis.enabled .Values.initContainer.waitForRedis.enabled }}
       initContainers:
-      - name: wait
-        image: willwill/wait-for-it
-        command:
-          - /wait-for-it.sh
-        args:
-          - "{{ .Release.Name }}-redis-master.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.redis.master.service.ports.redis }}"
-          - --timeout={{ .Values.initContainer.waitForRedisTimeout }}
+      - name: wait-for-redis
+        image: busybox:1.28
+        command: ['sh', '-c', 'until nc -z {{ .Release.Name }}-redis-master {{ .Values.redis.master.service.ports.redis }}; do echo waiting for redis; sleep 2; done;']
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 5000
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -59,7 +63,24 @@ spec:
               path: /
               port: http
           env:
-            {{- toYaml .Values.environment | replace "HELMRELEASENAME" .Release.Name | nindent 12 }}
+            - name: PORT
+              value: "5000"
+            - name: SNAPPASS_BIND_ADDRESS
+              value: "0.0.0.0"
+            {{- if .Values.redis.enabled }}
+            - name: REDIS_HOST
+              value: {{ printf "%s-redis-master" .Release.Name | quote }}
+            - name: REDIS_PORT
+              value: {{ .Values.redis.master.service.ports.redis | quote }}
+            {{- else }}
+            - name: REDIS_HOST
+              value: {{ .Values.externalRedis.host | quote }}
+            - name: REDIS_PORT
+              value: {{ .Values.externalRedis.port | quote }}
+            {{- end }}
+            {{- with .Values.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}
