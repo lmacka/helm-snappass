@@ -32,13 +32,9 @@ service:
 
 ingress:
   enabled: true
-  className: ""
+  className: "nginx"
   annotations: {}
-  hosts:
-    - host: snapppass.local
-      paths:
-        - path: /
-          pathType: Prefix
+  hosts: []
   tls: []
 
 resources:
