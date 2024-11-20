@@ -1,0 +1,30 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: snappass
+  namespace: snappass
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: snappass
+      version: "0.1.8"
+      sourceRef:
+        kind: HelmRepository
+        name: snappass
+        namespace: snappass
+  values:
+    ingress:
+      enabled: true
+      className: "nginx"
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      hosts:
+        - host: snappass.yourdomain.com
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - secretName: snappass-tls
+          hosts:
+            - snappass.yourdomain.com
