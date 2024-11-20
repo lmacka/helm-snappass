@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: lmacka/snappass
   pullPolicy: IfNotPresent
-  tag: "1.6.2"
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
