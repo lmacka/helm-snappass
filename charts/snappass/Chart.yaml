@@ -3,7 +3,7 @@ name: snappass
 description: Install the SnapPass secret tool
 home: "https://github.com/lmacka/helm-snappass"
 type: application
-version: 0.1.8
+version: 0.1.9
 appVersion: "1.6.2"
 icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
 keywords:

@@ -81,6 +81,17 @@ spec:
               value: {{ .Values.externalRedis.host | quote }}
             - name: REDIS_PORT
               value: {{ .Values.externalRedis.port | quote }}
+            {{- if .Values.externalRedis.database }}
+            - name: REDIS_DB
+              value: {{ .Values.externalRedis.database | quote }}
+            {{- end }}
+            {{- if .Values.externalRedis.usePassword }}
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.externalRedis.existingSecret }}
+                  key: {{ .Values.externalRedis.existingSecretPasswordKey }}
+            {{- end }}
             {{- end }}
             {{- with .Values.extraEnv }}
             {{- toYaml . | nindent 12 }}

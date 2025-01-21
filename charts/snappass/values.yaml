@@ -75,8 +75,13 @@ autoscaling:
 
 # External Redis configuration (used if redis.enabled is false)
 externalRedis:
+  enabled: false
   host: ""
   port: 6379
+  database: 0
+  usePassword: false
+  existingSecret: ""
+  existingSecretPasswordKey: ""
 
 # Additional environment variables
 extraEnv: []
