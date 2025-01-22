@@ -13,6 +13,46 @@ entries:
       artifacthub.io/prerelease: "false"
     apiVersion: v2
     appVersion: 1.6.2
+    created: "2025-01-22T22:36:30.632542675Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~19
+    description: Install the SnapPass secret tool
+    digest: 34da289f26a1dc94c2cd45d0a29d2393ea9004c1152c09f6e8309815e3e56dd8
+    home: https://github.com/lmacka/helm-snappass
+    icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
+    keywords:
+    - pinterest
+    - password
+    - secret
+    - security
+    - secure
+    - share
+    kubeVersion: '>=1.21.0-0'
+    maintainers:
+    - name: lmacka
+      url: https://github.com/lmacka
+    name: snappass
+    sources:
+    - https://github.com/lmacka/helm-snappass
+    type: application
+    urls:
+    - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.10/snappass-0.1.10.tgz
+    version: 0.1.10
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: string replace in deployment for HELMRELEASENAME
+        - kind: added
+          description: optional init container to wait for redis to be ready
+        - kind: fixed
+          description: ingress class deprecation
+      artifacthub.io/operator: "false"
+      artifacthub.io/prerelease: "false"
+    apiVersion: v2
+    appVersion: 1.6.2
     created: "2025-01-21T02:07:44.407651257Z"
     dependencies:
     - condition: redis.enabled
@@ -330,4 +370,4 @@ entries:
     urls:
     - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.1/snappass-0.1.1.tgz
     version: 0.1.1
-generated: "2025-01-21T02:07:44.40767431Z"
+generated: "2025-01-22T22:36:30.632591466Z"
