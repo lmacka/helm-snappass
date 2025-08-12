@@ -3,7 +3,7 @@ name: snappass
 description: Install the SnapPass secret tool
 home: "https://github.com/lmacka/helm-snappass"
 type: application
-version: 0.1.11
+version: 0.1.12
 appVersion: "1.6.2"
 icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
 keywords:
@@ -32,3 +32,5 @@ annotations:
       description: Gunicorn workers configuration support
     - kind: changed
       description: Updated container image to use gunicorn
+    - kind: fixed
+      description: Fixed gunicorn logging

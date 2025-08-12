@@ -100,19 +100,23 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
-          {{- end }}
+            {{- end }}
           command: ["/bin/sh"]
           args:
             - -c
             - |
               export PORT="${SNAPPASS_APP_PORT}"
               unset SNAPPASS_PORT  # Clear the auto-generated variable
-              exec snappass
-      {{- with .Values.volumes }}
+              exec gunicorn -b "${SNAPPASS_BIND_ADDRESS}:${PORT}" --workers "${GUNICORN_WORKERS}" --access-logfile - --error-logfile - --log-level info snappass.main:app
       volumes:
+        - name: tmp
+          emptyDir: {}
+      {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
