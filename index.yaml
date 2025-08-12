@@ -7,6 +7,46 @@ entries:
           description: Gunicorn workers configuration support
         - kind: changed
           description: Updated container image to use gunicorn
+        - kind: fixed
+          description: Fixed gunicorn logging
+      artifacthub.io/operator: "false"
+      artifacthub.io/prerelease: "false"
+    apiVersion: v2
+    appVersion: 1.6.2
+    created: "2025-08-12T12:07:38.731845972Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~19
+    description: Install the SnapPass secret tool
+    digest: 88c8d586427eced6ea924d7d5d5757257096ebe24e425009a1134e42c7ca40f6
+    home: https://github.com/lmacka/helm-snappass
+    icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
+    keywords:
+    - pinterest
+    - password
+    - secret
+    - security
+    - secure
+    - share
+    kubeVersion: '>=1.21.0-0'
+    maintainers:
+    - name: lmacka
+      url: https://github.com/lmacka
+    name: snappass
+    sources:
+    - https://github.com/lmacka/helm-snappass
+    type: application
+    urls:
+    - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.12/snappass-0.1.12.tgz
+    version: 0.1.12
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: Gunicorn workers configuration support
+        - kind: changed
+          description: Updated container image to use gunicorn
       artifacthub.io/operator: "false"
       artifacthub.io/prerelease: "false"
     apiVersion: v2
@@ -408,4 +448,4 @@ entries:
     urls:
     - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.1/snappass-0.1.1.tgz
     version: 0.1.1
-generated: "2025-08-12T11:46:46.040216491Z"
+generated: "2025-08-12T12:07:38.731885626Z"
