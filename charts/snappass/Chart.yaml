@@ -3,7 +3,7 @@ name: snappass
 description: Install the SnapPass secret tool
 home: "https://github.com/lmacka/helm-snappass"
 type: application
-version: 0.1.10
+version: 0.1.11
 appVersion: "1.6.2"
 icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
 keywords:
@@ -29,8 +29,6 @@ annotations:
   artifacthub.io/prerelease: "false"
   artifacthub.io/changes: |
     - kind: added
-      description: string replace in deployment for HELMRELEASENAME
-    - kind: added
-      description: optional init container to wait for redis to be ready
-    - kind: fixed
-      description: ingress class deprecation
+      description: Gunicorn workers configuration support
+    - kind: changed
+      description: Updated container image to use gunicorn
