@@ -83,6 +83,10 @@ externalRedis:
   existingSecret: ""
   existingSecretPasswordKey: ""
 
+# Gunicorn configuration
+gunicorn:
+  workers: 3  # Number of worker processes (recommended: 2 x CPU cores + 1)
+
 # Additional environment variables
 extraEnv: []
 # - name: SNAPPASS_NO_SSL

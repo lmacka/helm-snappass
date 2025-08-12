@@ -71,6 +71,8 @@ spec:
               value: "5000"
             - name: SNAPPASS_BIND_ADDRESS
               value: "0.0.0.0"
+            - name: GUNICORN_WORKERS
+              value: {{ .Values.gunicorn.workers | quote }}
             {{- if .Values.redis.enabled }}
             - name: REDIS_HOST
               value: {{ printf "%s-redis-master" .Release.Name | quote }}
