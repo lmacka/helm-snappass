@@ -35,11 +35,11 @@ spec:
         {{- with .Values.podSecurityContext }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
-      {{- if and .Values.redis.enabled .Values.initContainer.waitForRedis.enabled }}
+      {{- if and .Values.valkey.enabled .Values.initContainer.waitForValkey.enabled }}
       initContainers:
-      - name: wait-for-redis
+      - name: wait-for-valkey
         image: busybox:stable
-        command: ['sh', '-c', 'until nc -z {{ .Release.Name }}-redis-master {{ .Values.redis.master.service.ports.redis }}; do echo waiting for redis; sleep 2; done;']
+        command: ['sh', '-c', 'until nc -z {{ .Release.Name }}-valkey {{ .Values.valkey.servicePort }}; do echo waiting for valkey; sleep 2; done;']
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -73,26 +73,26 @@ spec:
               value: "0.0.0.0"
             - name: GUNICORN_WORKERS
               value: {{ .Values.gunicorn.workers | quote }}
-            {{- if .Values.redis.enabled }}
+            {{- if .Values.valkey.enabled }}
             - name: REDIS_HOST
-              value: {{ printf "%s-redis-master" .Release.Name | quote }}
+              value: {{ printf "%s-valkey" .Release.Name | quote }}
             - name: REDIS_PORT
-              value: {{ .Values.redis.master.service.ports.redis | quote }}
+              value: {{ .Values.valkey.servicePort | quote }}
             {{- else }}
             - name: REDIS_HOST
-              value: {{ .Values.externalRedis.host | quote }}
+              value: {{ .Values.externalValkey.host | quote }}
             - name: REDIS_PORT
-              value: {{ .Values.externalRedis.port | quote }}
-            {{- if .Values.externalRedis.database }}
+              value: {{ .Values.externalValkey.port | quote }}
+            {{- if .Values.externalValkey.database }}
             - name: REDIS_DB
-              value: {{ .Values.externalRedis.database | quote }}
+              value: {{ .Values.externalValkey.database | quote }}
             {{- end }}
-            {{- if .Values.externalRedis.usePassword }}
+            {{- if .Values.externalValkey.usePassword }}
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.externalRedis.existingSecret }}
-                  key: {{ .Values.externalRedis.existingSecretPasswordKey }}
+                  name: {{ .Values.externalValkey.existingSecret }}
+                  key: {{ .Values.externalValkey.existingSecretPasswordKey }}
             {{- end }}
             {{- end }}
             {{- with .Values.extraEnv }}

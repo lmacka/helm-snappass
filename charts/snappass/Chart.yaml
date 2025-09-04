@@ -20,10 +20,10 @@ maintainers:
     url: https://github.com/lmacka
 kubeVersion: ">=1.21.0-0"
 dependencies:
-  - name: redis
-    condition: redis.enabled
-    version: ~19
-    repository: https://charts.bitnami.com/bitnami
+  - name: valkey
+    condition: valkey.enabled
+    version: ~2.1
+    repository: https://groundhog2k.github.io/helm-charts/
 annotations:
   artifacthub.io/operator: "false"
   artifacthub.io/prerelease: "false"

@@ -45,26 +45,27 @@ resources:
     cpu: 200m
     memory: 256Mi
 
-# Built-in Redis configuration
-redis:
+# Built-in Valkey configuration
+valkey:
   enabled: true
-  architecture: standalone
-  auth:
+  haMode:
     enabled: false
-  master:
-    persistence:
-      enabled: true
-      size: 100Mi
-    resources:
-      limits:
-        cpu: 200m
-        memory: 256Mi
-      requests:
-        cpu: 100m
-        memory: 128Mi
-    securityContext:
-      runAsNonRoot: true
-      runAsUser: 1001
+    replicas: 1
+  storage:
+    className: ""
+    requestedSize: 2Gi
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  containerSecurityContext:
+    enabled: true
+    runAsNonRoot: true
+    runAsUser: 1000
+  servicePort: 6379
 
 autoscaling:
   enabled: false
@@ -73,8 +74,8 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
 
-# External Redis configuration (used if redis.enabled is false)
-externalRedis:
+# External Valkey/Redis configuration (used if valkey.enabled is false)
+externalValkey:
   enabled: false
   host: ""
   port: 6379
@@ -96,11 +97,11 @@ nodeSelector: {}
 tolerations: []
 affinity: {}
 
-# Init container to wait for Redis
+# Init container to wait for Valkey
 initContainer:
-  waitForRedis:
+  waitForValkey:
     enabled: true
-  waitForRedisTimeout: 30
+  waitForValkeyTimeout: 30
 
 livenessProbe:
   httpGet:
