@@ -4,6 +4,42 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: added
+          description: Replaced built-in redis with valkey, removing the dep on bitnami
+      artifacthub.io/operator: "false"
+      artifacthub.io/prerelease: "false"
+    apiVersion: v2
+    appVersion: 1.6.2
+    created: "2025-09-15T04:20:01.387567808Z"
+    dependencies:
+    - condition: valkey.enabled
+      name: valkey
+      repository: https://groundhog2k.github.io/helm-charts/
+      version: ~2.1
+    description: Install the SnapPass secret tool
+    digest: 43d3696c3afadecef5393cdc3c43567a86f708e76ea1c48b1d345be667583021
+    home: https://github.com/lmacka/helm-snappass
+    icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
+    keywords:
+    - pinterest
+    - password
+    - secret
+    - security
+    - secure
+    - share
+    kubeVersion: '>=1.21.0-0'
+    maintainers:
+    - name: lmacka
+      url: https://github.com/lmacka
+    name: snappass
+    sources:
+    - https://github.com/lmacka/helm-snappass
+    type: application
+    urls:
+    - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.13/snappass-0.1.13.tgz
+    version: 0.1.13
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
           description: Gunicorn workers configuration support
         - kind: changed
           description: Updated container image to use gunicorn
@@ -448,4 +484,4 @@ entries:
     urls:
     - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.1/snappass-0.1.1.tgz
     version: 0.1.1
-generated: "2025-08-12T12:07:38.731885626Z"
+generated: "2025-09-15T04:20:01.387677162Z"
