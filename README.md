@@ -8,7 +8,8 @@ A Helm chart for deploying [Pinterest's Snappass](https://github.com/pinterest/s
 
 Snappass is a secure password sharing tool that automatically expires shared secrets after a specified time. This Helm chart provides a production-ready deployment of Snappass on Kubernetes, including:
 
-- Built-in Redis backend (optional)
+- Built-in Valkey backend (Redis-compatible, optional)
+- Support for external Valkey/Redis servers
 - Ingress support
 - Security hardening
 - Horizontal Pod Autoscaling
@@ -76,12 +77,12 @@ For a production setup with TLS and resource limits:
       cpu: 200m
       memory: 256Mi
 
-  redis:
+  valkey:
     enabled: true
-    master:
-      persistence:
-        enabled: true
-        size: 100Mi
+    storage:
+      requestedSize: 100Mi
+    haMode:
+      enabled: false  # Set to true for high availability
   ```
 
 ## Parameters
@@ -95,14 +96,16 @@ For a production setup with TLS and resource limits:
 | `image.tag` | Snappass image tag | `latest` |
 | `image.pullPolicy` | Image pull policy | `IfNotPresent` |
 
-### Redis Configuration
+### Valkey Configuration
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
-| `redis.enabled` | Deploy Redis as part of the release | `true` |
-| `redis.architecture` | Redis architecture (standalone/replication) | `standalone` |
-| `externalRedis.host` | External Redis host (if redis.enabled=false) | `""` |
-| `externalRedis.port` | External Redis port | `6379` |
+| `valkey.enabled` | Deploy Valkey as part of the release | `true` |
+| `valkey.haMode.enabled` | Enable high availability mode | `false` |
+| `valkey.haMode.replicas` | Number of replicas in HA mode | `3` |
+| `valkey.storage.requestedSize` | Storage size for persistence | `100Mi` |
+| `externalValkey.host` | External Valkey/Redis host (if valkey.enabled=false) | `""` |
+| `externalValkey.port` | External Valkey/Redis port | `6379` |
 
 ### Ingress Configuration
 
