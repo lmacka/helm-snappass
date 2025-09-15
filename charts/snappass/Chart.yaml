@@ -3,7 +3,7 @@ name: snappass
 description: Install the SnapPass secret tool
 home: "https://github.com/lmacka/helm-snappass"
 type: application
-version: 0.1.12
+version: 0.1.13
 appVersion: "1.6.2"
 icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
 keywords:
@@ -29,8 +29,4 @@ annotations:
   artifacthub.io/prerelease: "false"
   artifacthub.io/changes: |
     - kind: added
-      description: Gunicorn workers configuration support
-    - kind: changed
-      description: Updated container image to use gunicorn
-    - kind: fixed
-      description: Fixed gunicorn logging
+      description: Replaced built-in redis with valkey, removing the dep on bitnami
