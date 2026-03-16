@@ -29,48 +29,40 @@ spec:
       {{- end }}
       serviceAccountName: {{ include "snappass.serviceAccountName" . }}
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        fsGroup: 1000
-        {{- with .Values.podSecurityContext }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- if and .Values.valkey.enabled .Values.initContainer.waitForValkey.enabled }}
       initContainers:
       - name: wait-for-valkey
-        image: busybox:stable
+        image: "{{ .Values.initContainer.waitForValkey.image.repository }}:{{ .Values.initContainer.waitForValkey.image.tag }}"
         command: ['sh', '-c', 'until nc -z {{ .Release.Name }}-valkey {{ .Values.valkey.servicePort }}; do echo waiting for valkey; sleep 2; done;']
+        {{- with .Values.initContainer.waitForValkey.securityContext }}
+        securityContext:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         resources:
           {{- toYaml .Values.initContainer.waitForValkey.resources | nindent 10 }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            {{- with .Values.securityContext }}
-            {{- toYaml . | nindent 12 }}
-            {{- end }}
+            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 5000
+              containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
+          {{- with .Values.livenessProbe }}
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           env:
             - name: SNAPPASS_APP_PORT
-              value: "5000"
+              value: {{ .Values.service.targetPort | quote }}
             - name: SNAPPASS_BIND_ADDRESS
               value: "0.0.0.0"
             - name: GUNICORN_WORKERS
