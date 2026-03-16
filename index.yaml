@@ -9,6 +9,42 @@ entries:
       artifacthub.io/prerelease: "false"
     apiVersion: v2
     appVersion: 1.6.2
+    created: "2026-03-16T01:05:35.365574121Z"
+    dependencies:
+    - condition: valkey.enabled
+      name: valkey
+      repository: https://groundhog2k.github.io/helm-charts/
+      version: ~2.1
+    description: Install the SnapPass secret tool
+    digest: 8dd6976c04d716c10b29994b93ef2227178eb08cc7b21a96642407bdf996bd30
+    home: https://github.com/lmacka/helm-snappass
+    icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
+    keywords:
+    - pinterest
+    - password
+    - secret
+    - security
+    - secure
+    - share
+    kubeVersion: '>=1.21.0-0'
+    maintainers:
+    - name: lmacka
+      url: https://github.com/lmacka
+    name: snappass
+    sources:
+    - https://github.com/lmacka/helm-snappass
+    type: application
+    urls:
+    - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.14/snappass-0.1.14.tgz
+    version: 0.1.14
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: Replaced built-in redis with valkey, removing the dep on bitnami
+      artifacthub.io/operator: "false"
+      artifacthub.io/prerelease: "false"
+    apiVersion: v2
+    appVersion: 1.6.2
     created: "2025-09-15T04:20:01.387567808Z"
     dependencies:
     - condition: valkey.enabled
@@ -484,4 +520,4 @@ entries:
     urls:
     - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.1/snappass-0.1.1.tgz
     version: 0.1.1
-generated: "2025-09-15T04:20:01.387677162Z"
+generated: "2026-03-16T01:05:35.365679287Z"
