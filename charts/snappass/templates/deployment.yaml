@@ -50,7 +50,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 5000
+              containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
           {{- with .Values.livenessProbe }}
           livenessProbe:
@@ -62,7 +62,7 @@ spec:
           {{- end }}
           env:
             - name: SNAPPASS_APP_PORT
-              value: "5000"
+              value: {{ .Values.service.targetPort | quote }}
             - name: SNAPPASS_BIND_ADDRESS
               value: "0.0.0.0"
             - name: GUNICORN_WORKERS

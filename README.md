@@ -93,7 +93,7 @@ For a production setup with TLS and resource limits:
 |-----------|-------------|---------|
 | `replicaCount` | Number of Snappass replicas | `1` |
 | `image.repository` | Snappass image repository | `lmacka/snappass` |
-| `image.tag` | Snappass image tag | `latest` |
+| `image.tag` | Snappass image tag (defaults to appVersion) | `""` |
 | `image.pullPolicy` | Image pull policy | `IfNotPresent` |
 
 ### Valkey Configuration
@@ -102,8 +102,8 @@ For a production setup with TLS and resource limits:
 |-----------|-------------|---------|
 | `valkey.enabled` | Deploy Valkey as part of the release | `true` |
 | `valkey.haMode.enabled` | Enable high availability mode | `false` |
-| `valkey.haMode.replicas` | Number of replicas in HA mode | `3` |
-| `valkey.storage.requestedSize` | Storage size for persistence | `100Mi` |
+| `valkey.haMode.replicas` | Number of replicas in HA mode | `1` |
+| `valkey.storage.requestedSize` | Storage size for persistence | `2Gi` |
 | `externalValkey.host` | External Valkey/Redis host (if valkey.enabled=false) | `""` |
 | `externalValkey.port` | External Valkey/Redis port | `6379` |
 
@@ -111,8 +111,8 @@ For a production setup with TLS and resource limits:
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
-| `ingress.enabled` | Enable ingress | `true` |
-| `ingress.className` | Ingress class name | `nginx` |
+| `ingress.enabled` | Enable ingress | `false` |
+| `ingress.className` | Ingress class name | `""` |
 | `ingress.hosts` | Array of host configurations | `[]` |
 | `ingress.tls` | TLS configuration | `[]` |
 
