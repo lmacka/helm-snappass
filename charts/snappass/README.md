@@ -93,12 +93,12 @@ The command removes all the Kubernetes components associated with the chart and 
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
-| `livenessProbe.httpGet.path` | Liveness probe path | `/` |
+| `livenessProbe.httpGet.path` | Liveness probe path | `/_/_/health` |
 | `livenessProbe.httpGet.port` | Liveness probe port | `http` |
 | `livenessProbe.initialDelaySeconds` | Liveness initial delay | `10` |
 | `livenessProbe.periodSeconds` | Liveness period | `10` |
 | `livenessProbe.timeoutSeconds` | Liveness timeout | `5` |
-| `readinessProbe.httpGet.path` | Readiness probe path | `/` |
+| `readinessProbe.httpGet.path` | Readiness probe path | `/_/_/health` |
 | `readinessProbe.httpGet.port` | Readiness probe port | `http` |
 | `readinessProbe.initialDelaySeconds` | Readiness initial delay | `5` |
 | `readinessProbe.periodSeconds` | Readiness period | `10` |
@@ -110,7 +110,8 @@ The command removes all the Kubernetes components associated with the chart and 
 |-----------|-------------|---------|
 | `valkey.enabled` | Enable built-in Valkey | `true` |
 | `valkey.haMode.enabled` | Enable Valkey HA mode | `false` |
-| `valkey.storage.requestedSize` | Valkey storage size | `2Gi` |
+| `valkey.storage.requestedSize` | Valkey storage size (empty = emptyDir) | `""` |
+| `valkey.valkeyConfig` | Valkey configuration overrides | `save ""` |
 | `valkey.servicePort` | Valkey service port | `6379` |
 | `externalValkey.enabled` | Use external Valkey/Redis | `false` |
 | `externalValkey.host` | External Valkey host | `""` |
