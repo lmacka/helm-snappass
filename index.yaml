@@ -5,6 +5,76 @@ entries:
       artifacthub.io/category: security
       artifacthub.io/changes: |
         - kind: changed
+          description: Bump appVersion to 2.0.0 (zero-knowledge architecture)
+        - kind: changed
+          description: Snappass now encrypts/decrypts entirely in the browser (AES-256-GCM)
+        - kind: changed
+          description: Server only stores opaque encrypted blobs, never sees plaintext
+        - kind: changed
+          description: Upgraded to Python 3.12, Flask 3.1
+        - kind: added
+          description: Security headers (CSP, X-Frame-Options, Referrer-Policy)
+        - kind: added
+          description: Per-endpoint rate limiting via flask-limiter with Redis backend
+        - kind: changed
+          description: Replaced v1/v2 plaintext APIs with v3 zero-knowledge API
+        - kind: removed
+          description: Removed vendored Bootstrap, jQuery, Font Awesome, Clipboard.js
+      artifacthub.io/images: |
+        - name: snappass
+          image: docker.io/lmacka/snappass:2.0.0
+        - name: valkey
+          image: docker.io/groundhog2k/valkey:8.1.6
+        - name: init-wait
+          image: docker.io/busybox:stable
+      artifacthub.io/license: MIT
+      artifacthub.io/links: |
+        - name: Upstream Project
+          url: https://github.com/pinterest/snappass
+        - name: Docker Hub
+          url: https://hub.docker.com/r/lmacka/snappass
+        - name: Live Demo
+          url: https://snappass.ac3.com.au/
+      artifacthub.io/operator: "false"
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/screenshots: |
+        - title: Snappass UI
+          url: https://lmacka.github.io/helm-snappass/img/snappass-ui.png
+    apiVersion: v2
+    appVersion: 2.0.0
+    created: "2026-03-16T12:29:22.140147852Z"
+    dependencies:
+    - condition: valkey.enabled
+      name: valkey
+      repository: https://groundhog2k.github.io/helm-charts/
+      version: ~2.1
+    description: Secure, ephemeral password sharing with time-based expiration and
+      one-time retrieval
+    digest: c63f2536af0aa33e4e267711078c900ec34472d3bf9f36fe163158f7d20c7bbb
+    home: https://github.com/lmacka/helm-snappass
+    icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
+    keywords:
+    - pinterest
+    - password
+    - secret
+    - security
+    - secure
+    - share
+    kubeVersion: '>=1.21.0-0'
+    maintainers:
+    - name: lmacka
+      url: https://github.com/lmacka
+    name: snappass
+    sources:
+    - https://github.com/lmacka/helm-snappass
+    type: application
+    urls:
+    - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.3.0/snappass-0.3.0.tgz
+    version: 0.3.0
+  - annotations:
+      artifacthub.io/category: security
+      artifacthub.io/changes: |
+        - kind: changed
           description: Make security contexts fully values-driven (pod, container, init container)
         - kind: changed
           description: Wire up liveness/readiness probe values in deployment template
@@ -600,4 +670,4 @@ entries:
     urls:
     - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.1/snappass-0.1.1.tgz
     version: 0.1.1
-generated: "2026-03-16T07:24:57.470790386Z"
+generated: "2026-03-16T12:29:22.140251646Z"
