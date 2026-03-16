@@ -2,6 +2,86 @@ apiVersion: v1
 entries:
   snappass:
   - annotations:
+      artifacthub.io/category: security
+      artifacthub.io/changes: |
+        - kind: changed
+          description: Make security contexts fully values-driven (pod, container, init container)
+        - kind: changed
+          description: Wire up liveness/readiness probe values in deployment template
+        - kind: changed
+          description: Default image pullPolicy to IfNotPresent and tag to appVersion
+        - kind: changed
+          description: Default ingress to disabled
+        - kind: added
+          description: PodDisruptionBudget template
+        - kind: added
+          description: Init container securityContext and configurable image
+        - kind: fixed
+          description: Hardened test pod with pinned image, securityContext, and resource limits
+        - kind: removed
+          description: Removed unused waitForValkeyTimeout value
+        - kind: changed
+          description: Conditional ingressClassName rendering
+        - kind: added
+          description: Declared volumeMounts and volumes defaults in values
+        - kind: changed
+          description: Default Valkey storage to emptyDir (no PVC) for ephemeral workloads
+        - kind: changed
+          description: Disable Valkey RDB snapshotting by default
+        - kind: changed
+          description: Use /_/_/health for probe endpoints instead of /
+      artifacthub.io/images: |
+        - name: snappass
+          image: docker.io/lmacka/snappass:0.1.3
+        - name: valkey
+          image: docker.io/groundhog2k/valkey:8.1.6
+        - name: init-wait
+          image: docker.io/busybox:stable
+      artifacthub.io/license: MIT
+      artifacthub.io/links: |
+        - name: Upstream Project
+          url: https://github.com/pinterest/snappass
+        - name: Docker Hub
+          url: https://hub.docker.com/r/lmacka/snappass
+        - name: Live Demo
+          url: https://snappass.ac3.com.au/
+      artifacthub.io/operator: "false"
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/screenshots: |
+        - title: Snappass UI
+          url: https://lmacka.github.io/helm-snappass/img/snappass-ui.png
+    apiVersion: v2
+    appVersion: 0.1.3
+    created: "2026-03-16T07:24:57.47067439Z"
+    dependencies:
+    - condition: valkey.enabled
+      name: valkey
+      repository: https://groundhog2k.github.io/helm-charts/
+      version: ~2.1
+    description: Secure, ephemeral password sharing with time-based expiration and
+      one-time retrieval
+    digest: 3c1f8ecd25cd0583f03a058874363d55ddbee861155225137ed43ea55b93a161
+    home: https://github.com/lmacka/helm-snappass
+    icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
+    keywords:
+    - pinterest
+    - password
+    - secret
+    - security
+    - secure
+    - share
+    kubeVersion: '>=1.21.0-0'
+    maintainers:
+    - name: lmacka
+      url: https://github.com/lmacka
+    name: snappass
+    sources:
+    - https://github.com/lmacka/helm-snappass
+    type: application
+    urls:
+    - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.2.0/snappass-0.2.0.tgz
+    version: 0.2.0
+  - annotations:
       artifacthub.io/changes: |
         - kind: added
           description: Replaced built-in redis with valkey, removing the dep on bitnami
@@ -520,4 +600,4 @@ entries:
     urls:
     - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.1/snappass-0.1.1.tgz
     version: 0.1.1
-generated: "2026-03-16T01:05:35.365679287Z"
+generated: "2026-03-16T07:24:57.470790386Z"
