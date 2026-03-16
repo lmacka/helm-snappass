@@ -1,0 +1,49 @@
+name: Update App Version
+
+on:
+  repository_dispatch:
+    types: [snappass-release]
+
+jobs:
+  update-chart:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install yq
+        uses: mikefarah/yq@v4.45.4
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Update Chart.yaml
+        run: |
+          APP_VERSION="${{ github.event.client_payload.version }}"
+          CHART_FILE="charts/snappass/Chart.yaml"
+
+          # Read current chart version and bump patch
+          CURRENT_CHART=$(yq '.version' "$CHART_FILE")
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_CHART"
+          NEW_PATCH=$((PATCH + 1))
+          NEW_CHART="${MAJOR}.${MINOR}.${NEW_PATCH}"
+
+          # Update version and appVersion
+          yq -i ".version = \"${NEW_CHART}\"" "$CHART_FILE"
+          yq -i ".appVersion = \"${APP_VERSION}\"" "$CHART_FILE"
+
+          # Update snappass image tag in artifacthub annotations
+          yq -i "(.annotations.\"artifacthub.io/images\") |= sub(\"snappass:[0-9.]+\", \"snappass:${APP_VERSION}\")" "$CHART_FILE"
+
+          # Update changes annotation
+          yq -i ".annotations.\"artifacthub.io/changes\" = \"- kind: changed\n  description: Bump appVersion to ${APP_VERSION}\n\"" "$CHART_FILE"
+
+      - name: Commit and push
+        run: |
+          git add charts/snappass/Chart.yaml
+          git commit -m "chore: bump snappass to ${{ github.event.client_payload.version }}"
+          git push origin main
