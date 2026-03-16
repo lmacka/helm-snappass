@@ -101,6 +101,13 @@ affinity: {}
 initContainer:
   waitForValkey:
     enabled: true
+    resources:
+      requests:
+        cpu: 10m
+        memory: 16Mi
+      limits:
+        cpu: 50m
+        memory: 32Mi
   waitForValkeyTimeout: 30
 
 livenessProbe:

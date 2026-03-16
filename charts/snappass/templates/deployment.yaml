@@ -40,6 +40,8 @@ spec:
       - name: wait-for-valkey
         image: busybox:stable
         command: ['sh', '-c', 'until nc -z {{ .Release.Name }}-valkey {{ .Values.valkey.servicePort }}; do echo waiting for valkey; sleep 2; done;']
+        resources:
+          {{- toYaml .Values.initContainer.waitForValkey.resources | nindent 10 }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
