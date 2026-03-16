@@ -3,8 +3,8 @@ name: snappass
 description: Secure, ephemeral password sharing with time-based expiration and one-time retrieval
 home: "https://github.com/lmacka/helm-snappass"
 type: application
-version: 0.4.0
-appVersion: "2.1.0"
+version: 0.4.1
+appVersion: "2.1.2"
 icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
 keywords:
   - password
@@ -42,7 +42,7 @@ annotations:
       url: https://github.com/lmacka/helm-snappass/issues
   artifacthub.io/images: |
     - name: snappass
-      image: docker.io/lmacka/snappass:2.1.0
+      image: docker.io/lmacka/snappass:2.1.2
     - name: valkey
       image: docker.io/groundhog2k/valkey:8.1.6
     - name: init-wait
@@ -51,11 +51,5 @@ annotations:
     - title: Snappass UI
       url: https://lmacka.github.io/helm-snappass/img/snappass-ui.png
   artifacthub.io/changes: |
-    - kind: added
-      description: Values schema validation (values.schema.json)
-    - kind: added
-      description: Version display in UI footer and startup banner
     - kind: changed
-      description: Bump appVersion to 2.1.0
-    - kind: added
-      description: ArtifactHub recommendations and support link
+      description: Bump appVersion to 2.1.2
