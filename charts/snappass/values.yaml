@@ -6,8 +6,9 @@ replicaCount: 1
 
 image:
   repository: lmacka/snappass
-  pullPolicy: Always
-  tag: "latest"
+  pullPolicy: IfNotPresent
+  # tag defaults to appVersion when omitted
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -22,8 +23,17 @@ serviceAccount:
 podAnnotations: {}
 podLabels: {}
 
-podSecurityContext: {}
-securityContext: {}
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
 
 service:
   type: ClusterIP
@@ -31,8 +41,8 @@ service:
   targetPort: 5000
 
 ingress:
-  enabled: true
-  className: "nginx"
+  enabled: false
+  className: ""
   annotations: {}
   hosts: []
   tls: []
@@ -101,6 +111,17 @@ affinity: {}
 initContainer:
   waitForValkey:
     enabled: true
+    image:
+      repository: busybox
+      tag: stable
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
     resources:
       requests:
         cpu: 10m
@@ -108,7 +129,6 @@ initContainer:
       limits:
         cpu: 50m
         memory: 32Mi
-  waitForValkeyTimeout: 30
 
 livenessProbe:
   httpGet:
@@ -124,3 +144,11 @@ readinessProbe:
   initialDelaySeconds: 5
   periodSeconds: 10
   timeoutSeconds: 5
+
+volumeMounts: []
+volumes: []
+
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
+  # maxUnavailable: 1

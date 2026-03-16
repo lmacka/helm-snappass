@@ -3,7 +3,7 @@ name: snappass
 description: Install the SnapPass secret tool
 home: "https://github.com/lmacka/helm-snappass"
 type: application
-version: 0.1.14
+version: 0.2.0
 appVersion: "1.6.2"
 icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
 keywords:
@@ -28,5 +28,23 @@ annotations:
   artifacthub.io/operator: "false"
   artifacthub.io/prerelease: "false"
   artifacthub.io/changes: |
+    - kind: changed
+      description: Make security contexts fully values-driven (pod, container, init container)
+    - kind: changed
+      description: Wire up liveness/readiness probe values in deployment template
+    - kind: changed
+      description: Default image pullPolicy to IfNotPresent and tag to appVersion
+    - kind: changed
+      description: Default ingress to disabled
     - kind: added
-      description: Replaced built-in redis with valkey, removing the dep on bitnami
+      description: PodDisruptionBudget template
+    - kind: added
+      description: Init container securityContext and configurable image
+    - kind: fixed
+      description: Hardened test pod with pinned image, securityContext, and resource limits
+    - kind: removed
+      description: Removed unused waitForValkeyTimeout value
+    - kind: changed
+      description: Conditional ingressClassName rendering
+    - kind: added
+      description: Declared volumeMounts and volumes defaults in values

@@ -7,9 +7,24 @@ metadata:
   annotations:
     "helm.sh/hook": test
 spec:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
   containers:
     - name: wget
-      image: busybox
-      command: ['wget']
-      args: ['{{ include "snappass.fullname" . }}:{{ .Values.service.port }}']
+      image: busybox:stable
+      command: ['sh', '-c', 'wget --spider --timeout=10 {{ include "snappass.fullname" . }}:{{ .Values.service.port }}']
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        readOnlyRootFilesystem: true
+      resources:
+        requests:
+          cpu: 10m
+          memory: 16Mi
+        limits:
+          cpu: 50m
+          memory: 32Mi
   restartPolicy: Never
