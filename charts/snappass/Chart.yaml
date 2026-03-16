@@ -3,8 +3,8 @@ name: snappass
 description: Secure, ephemeral password sharing with time-based expiration and one-time retrieval
 home: "https://github.com/lmacka/helm-snappass"
 type: application
-version: 0.2.0
-appVersion: "0.1.3"
+version: 0.3.0
+appVersion: "2.0.0"
 icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
 keywords:
   - pinterest
@@ -38,7 +38,7 @@ annotations:
       url: https://snappass.ac3.com.au/
   artifacthub.io/images: |
     - name: snappass
-      image: docker.io/lmacka/snappass:0.1.3
+      image: docker.io/lmacka/snappass:2.0.0
     - name: valkey
       image: docker.io/groundhog2k/valkey:8.1.6
     - name: init-wait
@@ -48,28 +48,18 @@ annotations:
       url: https://lmacka.github.io/helm-snappass/img/snappass-ui.png
   artifacthub.io/changes: |
     - kind: changed
-      description: Make security contexts fully values-driven (pod, container, init container)
+      description: Bump appVersion to 2.0.0 (zero-knowledge architecture)
     - kind: changed
-      description: Wire up liveness/readiness probe values in deployment template
+      description: Snappass now encrypts/decrypts entirely in the browser (AES-256-GCM)
     - kind: changed
-      description: Default image pullPolicy to IfNotPresent and tag to appVersion
+      description: Server only stores opaque encrypted blobs, never sees plaintext
     - kind: changed
-      description: Default ingress to disabled
+      description: Upgraded to Python 3.12, Flask 3.1
     - kind: added
-      description: PodDisruptionBudget template
+      description: Security headers (CSP, X-Frame-Options, Referrer-Policy)
     - kind: added
-      description: Init container securityContext and configurable image
-    - kind: fixed
-      description: Hardened test pod with pinned image, securityContext, and resource limits
+      description: Per-endpoint rate limiting via flask-limiter with Redis backend
+    - kind: changed
+      description: Replaced v1/v2 plaintext APIs with v3 zero-knowledge API
     - kind: removed
-      description: Removed unused waitForValkeyTimeout value
-    - kind: changed
-      description: Conditional ingressClassName rendering
-    - kind: added
-      description: Declared volumeMounts and volumes defaults in values
-    - kind: changed
-      description: Default Valkey storage to emptyDir (no PVC) for ephemeral workloads
-    - kind: changed
-      description: Disable Valkey RDB snapshotting by default
-    - kind: changed
-      description: Use /_/_/health for probe endpoints instead of /
+      description: Removed vendored Bootstrap, jQuery, Font Awesome, Clipboard.js
