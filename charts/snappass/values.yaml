@@ -56,6 +56,9 @@ resources:
     memory: 256Mi
 
 # Built-in Valkey configuration
+# Snappass is ephemeral by design — passwords are encrypted with per-URL keys,
+# deleted on first read, and auto-expired by TTL. No data needs to survive a restart.
+# Storage defaults to emptyDir (no PVC). Set requestedSize (e.g. "2Gi") if persistence is needed.
 valkey:
   enabled: true
   haMode:
@@ -63,7 +66,9 @@ valkey:
     replicas: 1
   storage:
     className: ""
-    requestedSize: 2Gi
+    requestedSize: ""
+  valkeyConfig: |
+    save ""
   resources:
     limits:
       cpu: 200m
@@ -132,14 +137,14 @@ initContainer:
 
 livenessProbe:
   httpGet:
-    path: /
+    path: /_/_/health
     port: http
   initialDelaySeconds: 10
   periodSeconds: 10
   timeoutSeconds: 5
 readinessProbe:
   httpGet:
-    path: /
+    path: /_/_/health
     port: http
   initialDelaySeconds: 5
   periodSeconds: 10

@@ -103,7 +103,8 @@ For a production setup with TLS and resource limits:
 | `valkey.enabled` | Deploy Valkey as part of the release | `true` |
 | `valkey.haMode.enabled` | Enable high availability mode | `false` |
 | `valkey.haMode.replicas` | Number of replicas in HA mode | `1` |
-| `valkey.storage.requestedSize` | Storage size for persistence | `2Gi` |
+| `valkey.storage.requestedSize` | Storage size for persistence (empty = emptyDir, no PVC) | `""` |
+| `valkey.valkeyConfig` | Valkey configuration overrides | `save ""` (persistence disabled) |
 | `externalValkey.host` | External Valkey/Redis host (if valkey.enabled=false) | `""` |
 | `externalValkey.port` | External Valkey/Redis port | `6379` |
 

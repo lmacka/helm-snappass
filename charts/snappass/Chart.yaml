@@ -48,3 +48,9 @@ annotations:
       description: Conditional ingressClassName rendering
     - kind: added
       description: Declared volumeMounts and volumes defaults in values
+    - kind: changed
+      description: Default Valkey storage to emptyDir (no PVC) for ephemeral workloads
+    - kind: changed
+      description: Disable Valkey RDB snapshotting by default
+    - kind: changed
+      description: Use /_/_/health for probe endpoints instead of /
