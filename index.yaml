@@ -4,6 +4,72 @@ entries:
   - annotations:
       artifacthub.io/category: security
       artifacthub.io/changes: |
+        - kind: added
+          description: Values schema validation (values.schema.json)
+        - kind: added
+          description: Version display in UI footer and startup banner
+        - kind: changed
+          description: Bump appVersion to 2.1.0
+        - kind: added
+          description: ArtifactHub recommendations and support link
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: snappass
+          image: docker.io/lmacka/snappass:2.1.0
+        - name: valkey
+          image: docker.io/groundhog2k/valkey:8.1.6
+        - name: init-wait
+          image: docker.io/busybox:stable
+      artifacthub.io/license: MIT
+      artifacthub.io/links: |
+        - name: Upstream Project
+          url: https://github.com/pinterest/snappass
+        - name: Docker Hub
+          url: https://hub.docker.com/r/lmacka/snappass
+        - name: Live Demo
+          url: https://snappass.ac3.com.au/
+        - name: support
+          url: https://github.com/lmacka/helm-snappass/issues
+      artifacthub.io/operator: "false"
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/helm/groundhog2k/valkey
+      artifacthub.io/screenshots: |
+        - title: Snappass UI
+          url: https://lmacka.github.io/helm-snappass/img/snappass-ui.png
+    apiVersion: v2
+    appVersion: 2.1.0
+    created: "2026-03-16T21:27:51.182534345Z"
+    dependencies:
+    - condition: valkey.enabled
+      name: valkey
+      repository: https://groundhog2k.github.io/helm-charts/
+      version: ~2.1
+    description: Secure, ephemeral password sharing with time-based expiration and
+      one-time retrieval
+    digest: 089ebc20066a8261b9314b9f2aeb62355991498b54f3346648bb53e47dc97173
+    home: https://github.com/lmacka/helm-snappass
+    icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
+    keywords:
+    - password
+    - secret
+    - security
+    - secure
+    - share
+    kubeVersion: '>=1.21.0-0'
+    maintainers:
+    - name: lmacka
+      url: https://github.com/lmacka
+    name: snappass
+    sources:
+    - https://github.com/lmacka/helm-snappass
+    type: application
+    urls:
+    - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.4.0/snappass-0.4.0.tgz
+    version: 0.4.0
+  - annotations:
+      artifacthub.io/category: security
+      artifacthub.io/changes: |
         - kind: changed
           description: Bump appVersion to 2.0.0 (zero-knowledge architecture)
         - kind: changed
@@ -670,4 +736,4 @@ entries:
     urls:
     - https://github.com/lmacka/helm-snappass/releases/download/snappass-0.1.1/snappass-0.1.1.tgz
     version: 0.1.1
-generated: "2026-03-16T12:29:22.140251646Z"
+generated: "2026-03-16T21:27:51.182657445Z"
