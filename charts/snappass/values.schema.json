@@ -1,0 +1,362 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Snappass Helm Chart Values",
+  "type": "object",
+  "required": ["replicaCount", "image", "service"],
+  "properties": {
+    "replicaCount": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of Snappass replicas"
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Snappass image repository"
+        },
+        "pullPolicy": {
+          "type": "string",
+          "enum": ["Always", "IfNotPresent", "Never"],
+          "description": "Image pull policy"
+        },
+        "tag": {
+          "type": "string",
+          "description": "Image tag (defaults to appVersion when empty)"
+        }
+      }
+    },
+    "imagePullSecrets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" }
+        }
+      },
+      "description": "Image pull secrets"
+    },
+    "nameOverride": {
+      "type": "string",
+      "description": "Override the chart name"
+    },
+    "fullnameOverride": {
+      "type": "string",
+      "description": "Override the full release name"
+    },
+    "serviceAccount": {
+      "type": "object",
+      "properties": {
+        "create": {
+          "type": "boolean",
+          "description": "Create a service account"
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Service account annotations"
+        },
+        "name": {
+          "type": "string",
+          "description": "Service account name"
+        },
+        "automount": {
+          "type": "boolean",
+          "description": "Automount service account token"
+        }
+      }
+    },
+    "podAnnotations": {
+      "type": "object",
+      "description": "Pod annotations"
+    },
+    "podLabels": {
+      "type": "object",
+      "description": "Pod labels"
+    },
+    "podSecurityContext": {
+      "type": "object",
+      "description": "Pod security context"
+    },
+    "securityContext": {
+      "type": "object",
+      "description": "Container security context"
+    },
+    "service": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["ClusterIP", "NodePort", "LoadBalancer"],
+          "description": "Service type"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "Service port"
+        },
+        "targetPort": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "Container target port"
+        }
+      }
+    },
+    "ingress": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable ingress"
+        },
+        "className": {
+          "type": "string",
+          "description": "Ingress class name"
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Ingress annotations"
+        },
+        "hosts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "host": { "type": "string" },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": { "type": "string" },
+                    "pathType": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "description": "Ingress hosts"
+        },
+        "tls": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "secretName": { "type": "string" },
+              "hosts": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          },
+          "description": "Ingress TLS configuration"
+        }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "description": "Container resource requests and limits"
+    },
+    "valkey": {
+      "type": "object",
+      "description": "Built-in Valkey (Redis-compatible) configuration",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Deploy Valkey as part of the release"
+        },
+        "haMode": {
+          "type": "object",
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "replicas": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "storage": {
+          "type": "object",
+          "properties": {
+            "className": { "type": "string" },
+            "requestedSize": { "type": "string" }
+          }
+        },
+        "valkeyConfig": { "type": "string" },
+        "resources": { "type": "object" },
+        "containerSecurityContext": { "type": "object" },
+        "servicePort": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        }
+      }
+    },
+    "autoscaling": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable horizontal pod autoscaling"
+        },
+        "minReplicas": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Minimum number of replicas"
+        },
+        "maxReplicas": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of replicas"
+        },
+        "targetCPUUtilizationPercentage": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Target CPU utilization percentage"
+        },
+        "targetMemoryUtilizationPercentage": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Target memory utilization percentage"
+        }
+      }
+    },
+    "externalValkey": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "External Valkey/Redis configuration (used if valkey.enabled is false)",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Use an external Valkey/Redis server"
+        },
+        "host": {
+          "type": "string",
+          "description": "External Valkey/Redis host"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "External Valkey/Redis port"
+        },
+        "database": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Redis database number"
+        },
+        "usePassword": {
+          "type": "boolean",
+          "description": "Whether external Redis requires a password"
+        },
+        "existingSecret": {
+          "type": "string",
+          "description": "Name of existing secret containing the password"
+        },
+        "existingSecretPasswordKey": {
+          "type": "string",
+          "description": "Key in existing secret containing the password"
+        }
+      }
+    },
+    "gunicorn": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "workers": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of gunicorn worker processes"
+        }
+      }
+    },
+    "extraEnv": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "value": { "type": "string" },
+          "valueFrom": { "type": "object" }
+        }
+      },
+      "description": "Additional environment variables"
+    },
+    "nodeSelector": {
+      "type": "object",
+      "description": "Node selector"
+    },
+    "tolerations": {
+      "type": "array",
+      "description": "Tolerations"
+    },
+    "affinity": {
+      "type": "object",
+      "description": "Affinity rules"
+    },
+    "initContainer": {
+      "type": "object",
+      "description": "Init container configuration",
+      "properties": {
+        "waitForValkey": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Enable init container to wait for Valkey"
+            },
+            "image": {
+              "type": "object",
+              "properties": {
+                "repository": { "type": "string" },
+                "tag": { "type": "string" }
+              }
+            },
+            "securityContext": { "type": "object" },
+            "resources": { "type": "object" }
+          }
+        }
+      }
+    },
+    "livenessProbe": {
+      "type": "object",
+      "description": "Liveness probe configuration"
+    },
+    "readinessProbe": {
+      "type": "object",
+      "description": "Readiness probe configuration"
+    },
+    "volumeMounts": {
+      "type": "array",
+      "description": "Additional volume mounts"
+    },
+    "volumes": {
+      "type": "array",
+      "description": "Additional volumes"
+    },
+    "podDisruptionBudget": {
+      "type": "object",
+      "description": "Pod disruption budget configuration",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable pod disruption budget"
+        },
+        "minAvailable": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimum available pods"
+        },
+        "maxUnavailable": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum unavailable pods"
+        }
+      }
+    }
+  }
+}

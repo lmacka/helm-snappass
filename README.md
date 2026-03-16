@@ -2,7 +2,7 @@
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/snappass)](https://artifacthub.io/packages/search?repo=snappass)
 
-A Helm chart for deploying [Pinterest's Snappass](https://github.com/pinterest/snappass) - a secure way to share passwords and secrets with a time-based expiration.  At the time of writing, pintrest don't have a regular build pipeline for their helm chart, so this is a community maintained chart based off the image build pipeline here: https://github.com/lmacka/helm-snappass
+A Helm chart for deploying [Snappass](https://github.com/lmacka/snappass) — a zero-knowledge, one-time secret sharing app. Originally forked from [Pinterest's Snappass](https://github.com/pinterest/snappass), this version encrypts and decrypts entirely in the browser (AES-256-GCM via Web Crypto API). The server never sees plaintext.
 
 ## Overview
 

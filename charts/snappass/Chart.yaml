@@ -3,11 +3,10 @@ name: snappass
 description: Secure, ephemeral password sharing with time-based expiration and one-time retrieval
 home: "https://github.com/lmacka/helm-snappass"
 type: application
-version: 0.3.0
-appVersion: "2.0.0"
+version: 0.4.0
+appVersion: "2.1.0"
 icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
 keywords:
-  - pinterest
   - password
   - secret
   - security
@@ -29,6 +28,9 @@ annotations:
   artifacthub.io/license: MIT
   artifacthub.io/operator: "false"
   artifacthub.io/prerelease: "false"
+  artifacthub.io/containsSecurityUpdates: "false"
+  artifacthub.io/recommendations: |
+    - url: https://artifacthub.io/packages/helm/groundhog2k/valkey
   artifacthub.io/links: |
     - name: Upstream Project
       url: https://github.com/pinterest/snappass
@@ -36,9 +38,11 @@ annotations:
       url: https://hub.docker.com/r/lmacka/snappass
     - name: Live Demo
       url: https://snappass.ac3.com.au/
+    - name: support
+      url: https://github.com/lmacka/helm-snappass/issues
   artifacthub.io/images: |
     - name: snappass
-      image: docker.io/lmacka/snappass:2.0.0
+      image: docker.io/lmacka/snappass:2.1.0
     - name: valkey
       image: docker.io/groundhog2k/valkey:8.1.6
     - name: init-wait
@@ -47,19 +51,11 @@ annotations:
     - title: Snappass UI
       url: https://lmacka.github.io/helm-snappass/img/snappass-ui.png
   artifacthub.io/changes: |
-    - kind: changed
-      description: Bump appVersion to 2.0.0 (zero-knowledge architecture)
-    - kind: changed
-      description: Snappass now encrypts/decrypts entirely in the browser (AES-256-GCM)
-    - kind: changed
-      description: Server only stores opaque encrypted blobs, never sees plaintext
-    - kind: changed
-      description: Upgraded to Python 3.12, Flask 3.1
     - kind: added
-      description: Security headers (CSP, X-Frame-Options, Referrer-Policy)
+      description: Values schema validation (values.schema.json)
     - kind: added
-      description: Per-endpoint rate limiting via flask-limiter with Redis backend
+      description: Version display in UI footer and startup banner
     - kind: changed
-      description: Replaced v1/v2 plaintext APIs with v3 zero-knowledge API
-    - kind: removed
-      description: Removed vendored Bootstrap, jQuery, Font Awesome, Clipboard.js
+      description: Bump appVersion to 2.1.0
+    - kind: added
+      description: ArtifactHub recommendations and support link
