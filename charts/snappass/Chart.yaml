@@ -3,7 +3,7 @@ name: snappass
 description: Secure, ephemeral password sharing with time-based expiration and one-time retrieval
 home: "https://github.com/lmacka/helm-snappass"
 type: application
-version: 0.4.1
+version: 0.4.2
 appVersion: "2.1.2"
 icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
 keywords:
