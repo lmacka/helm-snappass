@@ -141,7 +141,15 @@ To remove the deployment:
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Submit a Pull Request against the `main` branch.
+
+**Patch releases** are automated. When [snappass](https://github.com/lmacka/snappass) cuts a release, it dispatches to this repo which auto-bumps `appVersion` and the chart patch version in `Chart.yaml`, then pushes to `main`. The chart-releaser action packages and publishes the new chart.
+
+**Minor or major chart releases** require a manual version bump:
+
+1. Update `version` (and `appVersion` if needed) in `charts/snappass/Chart.yaml`
+2. Update the `artifacthub.io/images` and `artifacthub.io/changes` annotations
+3. Merge to `main` — chart-releaser handles the rest
 
 ## License
 
