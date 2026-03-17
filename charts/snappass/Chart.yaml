@@ -3,7 +3,7 @@ name: snappass
 description: Secure, ephemeral password sharing with time-based expiration and one-time retrieval
 home: "https://github.com/lmacka/helm-snappass"
 type: application
-version: 0.4.2
+version: 0.4.3
 appVersion: "2.1.2"
 icon: https://lmacka.github.io/helm-snappass/img/pinterest-logo.png
 keywords:
@@ -51,5 +51,7 @@ annotations:
     - title: Snappass UI
       url: https://lmacka.github.io/helm-snappass/img/snappass-ui.png
   artifacthub.io/changes: |
-    - kind: changed
-      description: Bump appVersion to 2.1.2
+    - kind: security
+      description: Disable service account token automount by default
+    - kind: fixed
+      description: Template service port in NOTES.txt instead of hardcoded 8080
